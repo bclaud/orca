@@ -10,12 +10,16 @@ let
 
   mixFodDeps = beamPackages.fetchMixDeps {
     pname = "mix-deps-${pname}";
-    inherit src version;
-    sha256 = lib.fakeSha256;
+    inherit src version elixir;
+    sha256 =  "sha256-+VmUSvyR83nBLeSNUOiFd0kRhahqcy3nKRSdW0AatcQ=";
+
+    MIX_ESBUILD_PATH="${esbuild}/bin/esbuild";
+    MIX_ESBUILD_VERSION="${esbuild.version}";
   };
 in
+
 beamPackages.mixRelease {
-  inherit mixFodDeps pname version src;
+  inherit mixFodDeps pname version src elixir;
 
   nativeBuildInputs = [ nodejs ];
 

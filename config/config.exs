@@ -31,12 +31,13 @@ config :orca, Orca.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.14.41",
+  version: System.get_env("MIX_ESBUILD_VERSION") || "0.14.41",
+  path: System.get_env("MIX_ESBUILD_PATH"),
   default: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+    env: %{"NODE_PATH" => System.get_env("NODE_PATH")}
   ]
 
 # Configure tailwind (the version is required)

@@ -34,3 +34,4 @@ npm-debug.log
 
 #nix shell
 .nix-shell
+.direnv

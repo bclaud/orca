@@ -12,7 +12,7 @@ mkShell {
   buildInputs = [
     glibcLocalesUtf8
     elixir
-    nodejs_latest
+    nodejs
     # yarn2nix
     nodePackages.node2nix
     nodePackages.prettier
@@ -32,4 +32,8 @@ mkShell {
   # + http://lists.linuxfromscratch.org/pipermail/lfs-support/2004-June/023900.html
   # export LC_ALL=en_US.UTF-8
   LOCALE_ARCHIVE = if pkgs.stdenv.isLinux then "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive" else "";
+
+  MIX_ESBUILD_PATH="${esbuild}/bin/esbuild";
+  MIX_ESBUILD_VERSION="${esbuild.version}";
+
 }

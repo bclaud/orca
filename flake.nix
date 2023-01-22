@@ -13,8 +13,8 @@
           erlang = super.erlangR25;
           beamPackages = super.beam.packagesWith erlang;
           elixir = beamPackages.elixir.override {
-            version = "1.14.2";
-            sha256 = "sha256-ABS+tXWm0vP3jb4ixWSi84Ltya7LHAuEkGMuAoZqHPA=";
+            version = "1.14.3";
+            sha256 =  "sha256-ABS+tXWm0vP3jb4ixWSi84Ltya7LHAuEkGMuAoZqHPA=";
           };
           hex = beamPackages.hex.override { inherit elixir;};
           rebar3 = beamPackages.rebar3;
