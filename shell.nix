@@ -15,9 +15,9 @@ mkShell {
     glibcLocalesUtf8
     elixir
     nodejs
-    # yarn2nix
-    nodePackages.node2nix
+    yarn2nix
     nodePackages.prettier
+    nodePackages.yarn
     nodePackages.tailwindcss
   ] ++ lib.optionals stdenv.isLinux
       [
