@@ -40,17 +40,17 @@ config :esbuild,
     env: %{"NODE_PATH" => System.get_env("NODE_PATH")}
   ]
 
-# Configure tailwind (the version is required)
+# Configure tailwind (the version and path are required)
 config :tailwind,
   version: System.get_env("MIX_TAILWIND_VERSION"),
+  path: System.get_env("MIX_TAILWIND_PATH"),
   default: [
     args: ~w(
       --config=tailwind.config.js
       --input=css/app.css
       --output=../priv/static/assets/app.css
     ),
-    cd: Path.expand("../assets", __DIR__),
-    path: System.get_env("MIX_TAILWIND_PATH")
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configures Elixir's Logger
