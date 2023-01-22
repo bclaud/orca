@@ -4,6 +4,8 @@ with pkgs;
 
 let
   projectName = "orca";
+
+  tailwind = nodePackages.tailwindcss;
 in
 
 mkShell {
@@ -16,6 +18,7 @@ mkShell {
     # yarn2nix
     nodePackages.node2nix
     nodePackages.prettier
+    nodePackages.tailwindcss
   ] ++ lib.optionals stdenv.isLinux
       [
         libnotify # For ExUnit Notifier on Linux.
@@ -32,6 +35,9 @@ mkShell {
   # + http://lists.linuxfromscratch.org/pipermail/lfs-support/2004-June/023900.html
   # export LC_ALL=en_US.UTF-8
   LOCALE_ARCHIVE = if pkgs.stdenv.isLinux then "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive" else "";
+
+  MIX_TAILWIND_PATH="${tailwind}/bin/tailwind";
+  MIX_TAILWIND_VERSION="${tailwind.version}";
 
   MIX_ESBUILD_PATH="${esbuild}/bin/esbuild";
   MIX_ESBUILD_VERSION="${esbuild.version}";

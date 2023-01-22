@@ -8,26 +8,30 @@ let
 
   src = ./.;
 
+  tailwind = nodePackages.tailwindcss;
   mixFodDeps = beamPackages.fetchMixDeps {
+    MIX_TAILWIND_PATH="${tailwind}/bin/tailwind";
+    MIX_TAILWIND_VERSION="${tailwind.version}";
+
     pname = "mix-deps-${pname}";
     inherit src version elixir;
     sha256 =  "sha256-+VmUSvyR83nBLeSNUOiFd0kRhahqcy3nKRSdW0AatcQ=";
-
-    MIX_ESBUILD_PATH="${esbuild}/bin/esbuild";
-    MIX_ESBUILD_VERSION="${esbuild.version}";
   };
 in
 
 beamPackages.mixRelease {
   inherit mixFodDeps pname version src elixir;
 
-  nativeBuildInputs = [ nodejs ];
+  nativeBuildInputs = [ nodejs tailwind ];
 
   LC_ALL = "en_US.UTF-8";
   LANG = "en_US.UTF-8";
 
   MIX_ESBUILD_PATH="${esbuild}/bin/esbuild";
   MIX_ESBUILD_VERSION="${esbuild.version}";
+
+  MIX_TAILWIND_PATH="${tailwind}/bin/tailwind";
+  MIX_TAILWIND_VERSION="${tailwind.version}";
 
   postBuild = ''
     export NODE_PATH="assets/node_modules"

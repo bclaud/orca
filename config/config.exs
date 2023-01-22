@@ -42,14 +42,15 @@ config :esbuild,
 
 # Configure tailwind (the version is required)
 config :tailwind,
-  version: "3.1.8",
+  version: System.get_env("MIX_TAILWIND_VERSION"),
   default: [
     args: ~w(
       --config=tailwind.config.js
       --input=css/app.css
       --output=../priv/static/assets/app.css
     ),
-    cd: Path.expand("../assets", __DIR__)
+    cd: Path.expand("../assets", __DIR__),
+    path: System.get_env("MIX_TAILWIND_PATH")
   ]
 
 # Configures Elixir's Logger
