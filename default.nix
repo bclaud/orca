@@ -10,8 +10,6 @@ let
 
   tailwind = nodePackages.tailwindcss;
   mixFodDeps = beamPackages.fetchMixDeps {
-    MIX_TAILWIND_PATH="${tailwind}/bin/tailwind";
-    MIX_TAILWIND_VERSION="${tailwind.version}";
 
     pname = "mix-deps-${pname}";
     inherit src version elixir;

@@ -12,10 +12,7 @@
         elixir_overlay = (self: super: rec {
           erlang = super.erlangR25;
           beamPackages = super.beam.packagesWith erlang;
-          elixir = beamPackages.elixir.override {
-            version = "1.14.3";
-            sha256 =  "sha256-ABS+tXWm0vP3jb4ixWSi84Ltya7LHAuEkGMuAoZqHPA=";
-          };
+          elixir = super.elixir_1_14;
           hex = beamPackages.hex.override { inherit elixir;};
           rebar3 = beamPackages.rebar3;
           buildMix = super.beam.packages.erlang.buildMix'.override { inherit elixir erlang hex; };
