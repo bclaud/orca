@@ -6,12 +6,29 @@ let
   projectName = "orca";
 
   tailwind = nodePackages.tailwindcss;
+
+  ciTest = pkgs.writeScriptBin "ci-test"  ''
+    # echo "Avoid utf-8 issues"
+    export LOCALE_ARCHIVE = "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive"
+    export LANG=en_US.UTF-8
+
+    echo "Installing hex and rebar"
+    mix local.hex --force
+    mix local.rebar --force
+
+    echo "Fetching Deps"
+    MIX_ENV=test mix deps.get
+
+    echo "Running tests"
+    MIX_ENV=test mix test
+    '';
 in
 
 mkShell {
   name = "${projectName}-shell";
 
   buildInputs = [
+    ciTest
     glibcLocalesUtf8
     elixir
     nodejs
@@ -33,7 +50,7 @@ mkShell {
   # Fixes locale issue on `nix-shell --pure` (at least on NixOS). See
   # + https://github.com/NixOS/nix/issues/318#issuecomment-52986702
   # + http://lists.linuxfromscratch.org/pipermail/lfs-support/2004-June/023900.html
-  # export LC_ALL=en_US.UTF-8
+  #export LC_ALL="en_US.UTF-8";
   LOCALE_ARCHIVE = if pkgs.stdenv.isLinux then "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive" else "";
 
   MIX_TAILWIND_PATH="${tailwind}/bin/tailwind";
