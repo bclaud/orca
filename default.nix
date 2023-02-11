@@ -13,7 +13,7 @@ let
 
     pname = "mix-deps-${pname}";
     inherit src version elixir;
-    sha256 =  "sha256-+VmUSvyR83nBLeSNUOiFd0kRhahqcy3nKRSdW0AatcQ=";
+    sha256 = "sha256-WXeSLBR8lQEDVGFrfzdnkbU9bJG2avBUg3l+opa2r64=";
   };
 in
 
