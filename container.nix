@@ -1,6 +1,6 @@
-{ pkgs, orca }:
+{ pkgs, orca, nix2containerPkgs}:
 
-pkgs.dockerTools.buildImage {
+nix2containerPkgs.nix2container.buildImage {
   name = "orca-container";
 
   config = {
@@ -21,6 +21,8 @@ pkgs.dockerTools.buildImage {
   copyToRoot = pkgs.buildEnv {
     name = "image-root";
     paths = with pkgs; [
+      gnubash
+      gnused
       coreutils
       orca
       bash
@@ -28,6 +30,6 @@ pkgs.dockerTools.buildImage {
     pathsToLink = [ "/bin" ];
   };
   
-  diskSize = 1024;
-  buildVMMemorySize = 512;
+  # diskSize = 1024;
+  # buildVMMemorySize = 512;
 }
