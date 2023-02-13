@@ -44,17 +44,13 @@ beamPackages.mixRelease {
   checkInputs = [ postgresql ];
 
   postgresqlTestUserOptions = "LOGIN SUPERUSER";
-  preCheck = ''
-  export PGUSER=$(whoami)
-  '';
 
   checkPhase = "
   runHook preCheck
 
-  echo PGHOST
-  echo $PGHOST
-  echo $PGHOST
-  echo $PGHOST
+  export PGUSER=$(whoami)
+
+  echo ''$PGHOST
 
   MIX_ENV=test mix test --no-deps-check
 
