@@ -21,7 +21,7 @@ nix2containerPkgs.nix2container.buildImage {
   copyToRoot = pkgs.buildEnv {
     name = "image-root";
     paths = with pkgs; [
-      gnubash
+      gnugrep
       gnused
       coreutils
       orca

@@ -5,13 +5,30 @@ import Config
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
+# config :orca, Orca.Repo,
+#   database: "orca_test#{System.get_env("MIX_TEST_PARTITION")}",
+#   socket_dir: System.get_env("PGHOST"),
+#   adapter: Ecto.Adapters.Postgres,
+#   pool: Ecto.Adapters.SQL.Sandbox,
+#   pool_size: 10
+
 config :orca, Orca.Repo,
   username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
+  socket_dir: "/build/run/postgresql",
   database: "orca_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
+
+
+
+
+# config :orca, Orca.Repo
+#   username: "postgres",
+#   password: "postgres",
+#   hostname: "localhost",
+#   database: "orca_test#{System.get_env("MIX_TEST_PARTITION")}",
+#   pool: Ecto.Adapters.SQL.Sandbox,
+#   pool_size: 10
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.

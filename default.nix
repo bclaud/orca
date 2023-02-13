@@ -13,7 +13,16 @@ let
 
     pname = "mix-deps-${pname}";
     inherit src version elixir;
-    sha256 = "sha256-WXeSLBR8lQEDVGFrfzdnkbU9bJG2avBUg3l+opa2r64=";
+    sha256 = "sha256-Xzy2Sb65JaIdiYQ2AAqmBYwsdTm05NCgOPMov53I0Dc=";
+
+    installPhase = ''
+      runHook preInstall
+      mix deps.get
+      find "$TEMPDIR/deps" -path '*/.git/*' -a ! -name HEAD -exec rm -rf {} +
+      cp -r --no-preserve=mode,ownership,timestamps $TEMPDIR/deps $out
+      runHook postInstall
+      ''; 
+
   };
 in
 
@@ -30,6 +39,28 @@ beamPackages.mixRelease {
 
   MIX_TAILWIND_PATH="${tailwind}/bin/tailwind";
   MIX_TAILWIND_VERSION="${tailwind.version}";
+
+  # nativeCheckInputs = [postgresqlTestHook];
+  checkInputs = [ postgresql postgresqlTestHook ];
+
+
+  checkPhase = '' 
+  runHook preCheck
+  export postgresqlTestSetupCommands=""
+  export PGUSER=$(whoami)
+
+  echo PGHOST
+  echo PGHOST
+  echo $PGHOST
+  echo $PGHOST
+  echo $PGHOST
+
+  MIX_ENV=test mix test --no-deps-check
+
+  runHook postCheck
+  '';
+
+  doCheck = true;
 
   postBuild = ''
     export NODE_PATH="assets/node_modules"
