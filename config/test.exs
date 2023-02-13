@@ -13,9 +13,13 @@ import Config
 #   pool_size: 10
 
 config :orca, Orca.Repo,
-  username: System.get_env("PGUSER") || "postgres",
-  socket_dir: System.get_env("PGHOST") || raise "missing PGHOST",
-  database: "orca_test#{System.get_env("MIX_TEST_PARTITION")}"
+  username: "postgres",
+  socket_dir: "/build/run/postgresql",
+  database: "orca_test#{System.get_env("MIX_TEST_PARTITION")}",
+  pool: Ecto.Adapters.SQL.Sandbox,
+  pool_size: 10
+
+
 
 
 # config :orca, Orca.Repo

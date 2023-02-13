@@ -40,22 +40,25 @@ beamPackages.mixRelease {
   MIX_TAILWIND_PATH="${tailwind}/bin/tailwind";
   MIX_TAILWIND_VERSION="${tailwind.version}";
 
-  checkNativeInputs = [postgresqlTestHook];
-  checkInputs = [ postgresql ];
+  # nativeCheckInputs = [postgresqlTestHook];
+  checkInputs = [ postgresql postgresqlTestHook ];
 
-  postgresqlTestUserOptions = "LOGIN SUPERUSER";
 
-  checkPhase = "
+  checkPhase = '' 
   runHook preCheck
-
+  export postgresqlTestSetupCommands=""
   export PGUSER=$(whoami)
 
-  echo ''$PGHOST
+  echo PGHOST
+  echo PGHOST
+  echo $PGHOST
+  echo $PGHOST
+  echo $PGHOST
 
   MIX_ENV=test mix test --no-deps-check
 
   runHook postCheck
-  ";
+  '';
 
   doCheck = true;
 
