@@ -17,6 +17,14 @@ let
 
     mixEnv = "";
 
+    installPhase = ''
+      runHook preInstall
+      mix deps.get
+      find "$TEMPDIR/deps" -path '*/.git/*' -a ! -name HEAD -exec rm -rf {} +
+      cp -r --no-preserve=mode,ownership,timestamps $TEMPDIR/deps $out
+      runHook postInstall
+      ''; 
+
   };
 in
 
