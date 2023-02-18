@@ -15,16 +15,8 @@ let
     inherit src version elixir;
     sha256 = "sha256-Xzy2Sb65JaIdiYQ2AAqmBYwsdTm05NCgOPMov53I0Dc=";
 
+    # set mixEnv to empty make it download deps from all envs
     mixEnv = "";
-
-    installPhase = ''
-      runHook preInstall
-      mix deps.get
-      find "$TEMPDIR/deps" -path '*/.git/*' -a ! -name HEAD -exec rm -rf {} +
-      cp -r --no-preserve=mode,ownership,timestamps $TEMPDIR/deps $out
-      runHook postInstall
-      ''; 
-
   };
 in
 
@@ -42,6 +34,7 @@ beamPackages.mixRelease {
   MIX_TAILWIND_PATH="${tailwind}/bin/tailwind";
   MIX_TAILWIND_VERSION="${tailwind.version}";
 
+  # Should be nativeCheckInputs but nothing working atm
   # nativeCheckInputs = [postgresqlTestHook];
   checkInputs = [ postgresql postgresqlTestHook ];
 
@@ -50,12 +43,6 @@ beamPackages.mixRelease {
   runHook preCheck
   export postgresqlTestSetupCommands=""
   export PGUSER=$(whoami)
-
-  echo PGHOST
-  echo PGHOST
-  echo $PGHOST
-  echo $PGHOST
-  echo $PGHOST
 
   MIX_ENV=test mix test --no-deps-check
 

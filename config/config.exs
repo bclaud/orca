@@ -30,7 +30,10 @@ config :orca, OrcaWeb.Endpoint,
 config :orca, Orca.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
-node_path = System.get_env("MIX_NIX_RELEASE") && System.get_env("NODE_PATH") || Path.expand("../deps", __DIR__)
+node_path =
+  (System.get_env("MIX_NIX_RELEASE") && System.get_env("NODE_PATH")) ||
+    Path.expand("../deps", __DIR__)
+
 config :esbuild,
   version: System.get_env("MIX_ESBUILD_VERSION") || "0.14.41",
   path: System.get_env("MIX_ESBUILD_PATH"),

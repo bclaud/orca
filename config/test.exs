@@ -12,23 +12,26 @@ import Config
 #   pool: Ecto.Adapters.SQL.Sandbox,
 #   pool_size: 10
 
-config :orca, Orca.Repo,
-  username: "postgres",
-  socket_dir: "/build/run/postgresql",
-  database: "orca_test#{System.get_env("MIX_TEST_PARTITION")}",
-  pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: 10
+test_repo_connection_opts =
+  case System.get_env("NIX_BUILD_TEST") do
+    nil ->     [
+      username: "postgres",
+      password: "postgres",
+      hostname: "localhost",
+      database: "orca_test#{System.get_env("MIX_TEST_PARTITION")}",
+      pool: Ecto.Adapters.SQL.Sandbox,
+      pool_size: 10
+    ]
+    _ ->      [
+       username: "postgres",
+       socket_dir: "/build/run/postgresql",
+       database: "orca_test#{System.get_env("MIX_TEST_PARTITION")}",
+       pool: Ecto.Adapters.SQL.Sandbox,
+       pool_size: 10
+     ] 
+  end
 
-
-
-
-# config :orca, Orca.Repo
-#   username: "postgres",
-#   password: "postgres",
-#   hostname: "localhost",
-#   database: "orca_test#{System.get_env("MIX_TEST_PARTITION")}",
-#   pool: Ecto.Adapters.SQL.Sandbox,
-#   pool_size: 10
+config :orca, Orca.Repo, test_repo_connection_opts
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
