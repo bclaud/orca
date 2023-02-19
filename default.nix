@@ -13,7 +13,7 @@ let
 
     pname = "mix-deps-${pname}";
     inherit src version elixir;
-    sha256 = "sha256-Xzy2Sb65JaIdiYQ2AAqmBYwsdTm05NCgOPMov53I0Dc=";
+    sha256 = "sha256-9fM4MUYDWJGfShoI5XCNqFPUsg4r/FD6PCoyogChiNs=";
 
     # set mixEnv to empty make it download deps from all envs
     mixEnv = "";
@@ -24,6 +24,8 @@ beamPackages.mixRelease {
   inherit mixFodDeps pname version src elixir;
 
   nativeBuildInputs = [ nodejs tailwind glibcLocalesUtf8 ];
+  
+  doCheck = true;
 
   LC_ALL = "en_US.UTF-8";
   LANG = "en_US.UTF-8";
@@ -48,8 +50,6 @@ beamPackages.mixRelease {
 
   runHook postCheck
   '';
-
-  doCheck = true;
 
   postBuild = ''
     export NODE_PATH="assets/node_modules"
