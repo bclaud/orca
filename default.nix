@@ -13,7 +13,7 @@ let
 
     pname = "mix-deps-${pname}";
     inherit src version elixir;
-    sha256 = "sha256-9fM4MUYDWJGfShoI5XCNqFPUsg4r/FD6PCoyogChiNs=";
+    sha256 = "sha256-uzCyO87gxsYJGGF1NgZgOGb8YwGgbK7XnVRznR+WYhU=";
 
     # set mixEnv to empty make it download deps from all envs
     mixEnv = "";
